@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form with Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px black;
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        button {
+            background: rgb(117, 117, 223);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+
+<form id="contactForm">
+    <h2>Contact Us</h2>
+
+    <label for="name">Name</label>
+    <input type="text" id="name" placeholder="Your name">
+    <div class="error" id="nameError"></div>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Your email">
+    <div class="error" id="emailError"></div>
+
+    <label for="message">Message</label>
+    <textarea id="message" rows="4" placeholder="Your message"></textarea>
+    <div class="error" id="messageError"></div>
+
+    <button type="submit">Send</button>
+</form>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // stop form submission
+
+    // Clear errors
+    document.getElementById("nameError").textContent = "";
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("messageError").textContent = "";
+
+    let isValid = true;
+
+    // Name validation
+    let name = document.getElementById("name").value.trim();
+    if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required.";
+        isValid = false;
+    }
+
+    // Email validation
+    let email = document.getElementById("email").value.trim();
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (email === "") {
+        document.getElementById("emailError").textContent = "Email is required.";
+        isValid = false;
+    } else if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Enter a valid email.";
+        isValid = false;
+    }
+
+    // Message validation
+    let message = document.getElementById("message").value.trim();
+    if (message === "") {
+        document.getElementById("messageError").textContent = "Message is required.";
+        isValid = false;
+    } else if (message.length < 10) {
+        document.getElementById("messageError").textContent = "Message must be at least 10 characters.";
+        isValid = false;
+    }
+
+    // If valid, simulate form submission
+    if (isValid) {
+        alert("Form submitted successfully!");
+        document.getElementById("contactForm").reset();
+    }
+});
+</script>
+
+</body>
+</html>
